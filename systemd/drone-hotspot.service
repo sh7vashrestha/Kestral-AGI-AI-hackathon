@@ -1,0 +1,14 @@
+[Unit]
+Description=drone-brain Wi-Fi hotspot (drops client Wi-Fi!)
+After=NetworkManager.service
+Wants=NetworkManager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=root
+ExecStart=/bin/bash "/home/drone/Desktop/Flight Plan/drone-brain/hotspot/hotspot.sh" up
+ExecStop=/bin/bash "/home/drone/Desktop/Flight Plan/drone-brain/hotspot/hotspot.sh" down
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no, interactive-widget=resizes-content">
+<meta name="theme-color" content="#121417">
+<script>/* theme before first paint: ?theme= (testing), saved choice, else the phone's light/dark setting */
+(function () { var t = null; try { t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("theme"); } catch (e) {}
+  if (t === "contrast") t = "light";
+  if (t !== "dark" && t !== "light") t = (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches) ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", t); })();</script>
+<title>KESTREL</title>
+<meta name="application-name" content="KESTREL">
+<meta name="apple-mobile-web-app-title" content="KESTREL">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/static/icon-192.png">
+<link rel="apple-touch-icon" href="/static/icon-180.png">
+<link rel="manifest" href="/static/manifest.webmanifest">
+<link rel="stylesheet" href="/static/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="/static/app.css?v=20261021d">
+<script src="/static/js/clientlog.js"></script>
+</head>
+<body>
+<header id="statusbar">
+  <div class="sb-brand" title="KESTREL"><img src="/static/kestrel-logo.png" alt="" height="22" style="height:22px;width:auto" onerror="this.remove()"><span>KESTREL</span></div>
+  <div class="sb-items">
+    <div class="sb-item sb-conn"><span id="conn-dot" class="dot bad"></span><span id="conn-text" class="sr-only">offline</span></div>
+    <div class="sb-item sb-state"><b id="sb-state">-</b></div>
+    <div class="sb-item sb-flag" id="sb-cam-item" title="Camera unavailable" hidden><b class="val-bad">CAM&#10005;</b></div>
+    <div class="sb-item sb-flag" id="sb-veh-item" title="No vehicle" hidden><b class="val-bad">VEH&#10005;</b></div>
+    <div class="sb-item sb-fly" id="sb-alt-item"><label>ALT</label><b id="sb-alt">-</b></div>
+    <div class="sb-item sb-fly" id="sb-mode-item"><b id="sb-mode">-</b></div>
+    <div class="sb-item" title="GPS fix and satellites"><label>GPS</label><b id="sb-gps">-</b></div>
+    <div class="sb-item" title="Battery"><label>BAT</label><b id="sb-batt">-</b></div>
+    <div class="sb-item" id="sb-armed-item" hidden><b id="sb-armed" class="sb-badge">ARMED</b></div>
+  </div>
+</header>
+<div id="conn-banner" class="slim danger" role="alert" hidden><span class="slim-txt">Connection lost, reconnecting&hellip; ABORT still works over HTTP. If it does not, use the RC transmitter.</span><button id="conn-x" class="slim-x" type="button" aria-label="Hide">&times;</button></div>
+<div id="demo-banner" class="slim info" hidden><span class="slim-txt"><b>DEMO</b> &middot; nothing flies &middot; GO starts the live camera search</span><a class="slim-more" href="/live">Watch live &rsaquo;</a></div>
+<div id="sysnote" class="slim-box" hidden></div>
+<div id="benchbar" class="slim-box" hidden></div>
+
+<nav id="tabs">
+  <button id="tab-survey" class="tab active" data-tab="survey">Survey</button>
+  <button id="tab-chat" class="tab" data-tab="chat">Chat</button>
+  <button id="tab-alerts" class="tab" data-tab="alerts">Alerts <span id="alert-count" class="badge" hidden>0</span></button>
+  <button id="tab-vehicle" class="tab" data-tab="vehicle">Vehicle</button>
+</nav>
+
+<main>
+  <section id="panel-survey">
+    <div id="map-wrap">
+      <div id="map"></div>
+      <div id="map-chip" hidden></div>
+      <div id="map-tools">
+        <button id="layer-btn" class="map-btn" aria-label="Map layer" title="Map layer">Map</button>
+        <button id="center-btn" class="map-btn" aria-label="Centre on drone" title="Centre on drone">&#9678;</button>
+        <button id="theme-btn" class="map-btn" aria-label="Switch dark / light theme" title="Theme">&#9680;</button>
+      </div>
+      <div id="nomap" hidden></div>
+      <div id="map-legend" hidden></div>
+    </div>
+
+    <div id="stepper">
+      <button id="step-prev" class="step-nav" type="button" aria-label="Previous step">&lsaquo;</button>
+      <div class="step-mid">
+        <span id="step-label">Step 1 of 4 &middot; Area</span>
+        <span class="step-bar" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></span>
+      </div>
+      <button id="step-next" class="step-nav" type="button" aria-label="Next step">&rsaquo;</button>
+    </div>
+
+    <div id="sheet">
+      <!-- 1: area -->
+      <div class="step" id="step-1">
+        <p id="area-hint" class="hint">Tap the map to drop corner 1 of 4.</p>
+        <div id="area-stats" class="chips"></div>
+        <div id="area-warn"></div>
+        <div class="row tools">
+          <button id="undo-btn" class="secondary">Undo</button>
+          <button id="clear-btn" class="secondary">Clear</button>
+          <button id="dronepos-btn" class="secondary" title="Add a corner at the drone position">+ Drone</button>
+          <button id="paste-toggle" class="secondary" aria-expanded="false" title="Paste coordinates">Paste</button>
+        </div>
+        <div id="paste-wrap" hidden>
+          <textarea id="paste-input" rows="4" spellcheck="false" placeholder="33.93720, -84.52710&#10;33.93720, -84.52600&#10;33.93800, -84.52600&#10;33.93800, -84.52710"></textarea>
+          <button id="paste-apply" class="secondary wide">Use these corners</button>
+        </div>
+        <details id="airspace" hidden><summary>Airspace: authorization required</summary><div id="airspace-text" class="notice warn"></div></details>
+        <div class="actions"><button id="to-questions" class="primary" disabled>Next: questions</button></div>
+      </div>
+
+      <!-- 2: questions -->
+      <div class="step" id="step-2" hidden>
+        <label class="q" for="target-text">What are you looking for?</label>
+        <input id="target-text" type="text" maxlength="500" autocomplete="off" placeholder="e.g. person in a red jacket" enterkeyhint="done">
+
+        <div class="q-row"><label class="q" for="alt-range">Altitude</label><b id="alt-val">20 m</b></div>
+        <input id="alt-range" type="range" min="5" max="60" step="1" value="20">
+        <div id="alt-feedback" class="chips"></div>
+        <button id="alt-suggest" class="link-btn" hidden></button>
+
+        <details id="adv">
+          <summary>Advanced</summary>
+          <div class="q-row"><label class="q" for="ov-range">Image overlap</label><b id="ov-val">25%</b></div>
+          <input id="ov-range" type="range" min="0" max="80" step="5" value="25">
+        </details>
+        <div id="speed-line" class="muted"></div>
+
+        <div class="row actions">
+          <button id="q-back" class="secondary" hidden>Back</button>
+          <button id="to-preview" class="primary">Design route</button>
+        </div>
+      </div>
+
+      <!-- 3: preview -->
+      <div class="step" id="step-3" hidden>
+        <div id="bench-chip-wrap" hidden></div>
+        <div id="review-card" class="review-card" hidden>
+          <div class="rv-head">
+            <h2>Review</h2>
+            <span id="rv-time" class="muted"></span>
+            <button id="rv-refresh" class="secondary rv-small" type="button">Re-check</button>
+          </div>
+          <p class="muted rv-intro">Check the route on the map, then press GO.</p>
+          <ul id="rv-list" class="rv-list"></ul>
+          <div id="go-reason" class="notice warn" hidden></div>
+          <div class="go-wrap"><button id="go-btn" class="primary go-btn" type="button" disabled>GO</button></div>
+          <p class="rv-rc">Reminder for the flight: if the phone loses the drone's WiFi, abort with the RC RTL switch.</p>
+          <button id="rv-cancel" class="link-btn" type="button">Cancel upload</button>
+        </div>
+        <div id="rb-card" class="rb-card" hidden>
+          <div id="rb-summary"></div>
+          <div id="rb-links" class="rb-links"></div>
+          <div id="rb-hint" class="muted rb-hint">Mission Planner &rarr; Plan &rarr; Load WP File</div>
+          <details id="rb-details">
+            <summary>Planned vs uploaded</summary>
+            <div class="table-wrap rb-wrap">
+              <table id="rb-table"><thead><tr><th>#</th><th>Item</th><th>Diff</th><th></th></tr></thead><tbody></tbody></table>
+            </div>
+          </details>
+          <button id="rb-read" class="secondary wide">Read mission from Pixhawk</button>
+        </div>
+        <div id="planning" class="hint" hidden>Designing the route&hellip;</div>
+        <div id="plan-empty" class="hint muted">No route yet. Pick an area and answer the questions first.</div>
+        <div id="plan-body" hidden>
+          <div id="plan-target" class="target-line"></div>
+          <div id="plan-errors"></div>
+          <dl id="plan-stats" class="stats"></dl>
+          <div id="plan-battery" class="muted small"></div>
+          <div id="plan-warnings"></div>
+          <details id="plan-more">
+            <summary>Plan details</summary>
+            <dl id="plan-stats-more" class="stats"></dl>
+            <div id="plan-preflight"></div>
+            <div id="plan-files" class="muted"></div>
+            <button id="wp-toggle" class="link-btn" aria-expanded="false">Show waypoints</button>
+            <div id="wp-wrap" class="table-wrap" hidden>
+              <table id="wp-table"><thead><tr><th>#</th><th>N (m)</th><th>E (m)</th><th>Alt</th></tr></thead><tbody></tbody></table>
+            </div>
+          </details>
+          <div class="row actions" id="confirm-row">
+            <button id="p-back" class="secondary">Edit</button>
+            <button id="confirm-btn" class="primary" disabled>Confirm plan</button>
+          </div>
+          <button id="clear-mission-btn" class="secondary" hidden>Clear mission on Pixhawk</button>
+        </div>
+      </div>
+
+      <!-- 4: flight -->
+      <div class="step" id="step-4" hidden>
+        <div id="flight-info" class="chips"></div>
+        <div id="flight-summary" hidden></div>
+        <div id="cur-target" class="target-line muted">No target set</div>
+        <form id="target-form" autocomplete="off" class="inline-form">
+          <input id="target-input" type="text" maxlength="500" placeholder="Change target, e.g. blue jacket">
+          <button type="submit" class="secondary">Update</button>
+        </form>
+        <div id="flight-alerts"></div>
+        <p id="flight-alerts-empty" class="muted small">No alerts yet.</p>
+        <button id="new-survey" class="secondary wide" hidden>Start a new survey</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-chat" hidden>
+    <div id="chat-empty">
+      <h2>Plan a search in plain words</h2>
+      <p class="muted">Gemma turns your request into a plan. You check it in Survey before anything flies.</p>
+      <div class="suggestions">
+        <button type="button" class="suggest" data-text="Search the selected area for a person in a red jacket">Search the selected area for a person in a red jacket</button>
+        <button type="button" class="suggest" data-text="Search 100 x 50 m north of home at 20 m">Search 100 &times; 50 m north of home at 20 m</button>
+        <button type="button" class="suggest" data-text="What can you do?" data-send="1">What can you do?</button>
+      </div>
+    </div>
+    <div id="chat" aria-live="polite" hidden></div>
+    <form id="chat-form" autocomplete="off" class="composer">
+      <textarea id="chat-input" rows="1" maxlength="2000" placeholder="Describe the search&hellip;" enterkeyhint="send" aria-label="Message to Gemma"></textarea>
+      <button type="submit" id="chat-send" class="send-btn" aria-label="Send" title="Send" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </form>
+  </section>
+
+  <section id="panel-vehicle" hidden>
+    <a id="live-link" class="nav-card" href="/live">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>
+      <span><b>Live cameras</b><small>RGB and thermal video</small></span>
+      <i aria-hidden="true">&rsaquo;</i>
+    </a>
+    <div class="card">
+      <h2>Live state <span id="veh-mode" class="muted"></span></h2>
+      <dl id="veh-live" class="stats"></dl>
+    </div>
+    <div class="card">
+      <h2>Pixhawk messages</h2>
+      <div id="veh-log" class="veh-log"><p class="muted">No messages yet.</p></div>
+      <button id="veh-check-btn" class="tonal wide">Run vehicle check (read-only)</button>
+      <button id="veh-read-btn" class="secondary wide" hidden>Read mission from Pixhawk</button>
+      <div id="veh-report"></div>
+    </div>
+    <div class="card">
+      <h2>System</h2>
+      <p class="muted">Read-only check of host, LLM, cameras, vision, Pixhawk and config. Up to a minute.</p>
+      <div class="row">
+        <button id="sys-quick-btn" class="secondary">Quick check</button>
+        <button id="sys-check-btn" class="tonal">Full check</button>
+      </div>
+      <div id="sys-report"></div>
+    </div>
+  </section>
+
+  <section id="panel-alerts" hidden>
+    <div id="alerts"></div>
+    <p id="alerts-empty" class="muted center">No alerts yet.</p>
+  </section>
+</main>
+
+<div id="legal" class="modal" role="dialog" aria-modal="true" aria-labelledby="legal-title" hidden>
+  <div class="modal-box">
+    <h2 id="legal-title">Before the first flight</h2>
+    <p class="muted">Confirm each item. Asked once per session.</p>
+    <div id="legal-items"></div>
+    <div class="row">
+      <button id="legal-cancel" class="secondary">Cancel</button>
+      <button id="legal-ok" class="primary" disabled>I confirm</button>
+    </div>
+  </div>
+</div>
+<div id="toast" role="alert" hidden></div>
+<div id="lightbox" hidden><img id="lightbox-img" alt="Alert image enlarged"><div id="lightbox-cap"></div></div>
+
+<div id="abort-bar">
+  <button id="abort-btn" aria-label="Abort and return to launch">ABORT / RTL</button>
+</div>
+<script src="/static/vendor/maplibre-gl.js"></script>
+<script src="/static/vendor/pmtiles.js"></script>
+<script type="module" src="/static/app.js?v=20261021d"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# Install into a venv created with --system-site-packages:
+#   python3 -m venv --system-site-packages .venv && .venv/bin/pip install -r requirements.txt
+# From JetPack / system (do NOT pip install these, it would replace the CUDA builds):
+#   torch 2.8.0 (NVIDIA JetPack 6 wheel), tensorrt 10.3.0, opencv 4.5.4 (GStreamer=YES),
+#   numpy 1.26.4, ultralytics 8.4.19, pymavlink 2.4.49
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.4
+pydantic-settings==2.7.0
+httpx==0.28.1
+python-multipart==0.0.20
+pytest==8.3.4
+pytest-asyncio==0.25.0
+onnx==1.23.2
+onnxslim==0.1.98
+onnxruntime==1.23.2   # installed with --no-deps (torch/numpy/opencv untouched)
+open_clip_torch==3.3.0     # --no-deps (also --no-deps: huggingface_hub==0.36.0 safetensors ftfy regex)
+huggingface_hub==0.36.0
+safetensors==0.8.0
+protobuf>=5   # venv-only; system protobuf is too old for onnx
+ml_dtypes==0.6.0

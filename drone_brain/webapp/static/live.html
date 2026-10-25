@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>KESTREL · Live view</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+<link rel="stylesheet" href="/live-assets/live.css">
+</head>
+<body>
+<header class="top">
+  <a id="back" class="back" href="/" hidden>&larr; Mission</a>
+  <h1>Live view</h1>
+  <span id="sysline" class="muted sys"></span>
+</header>
+
+<section class="controls" aria-label="Controls">
+  <div class="seg" id="viewSeg" role="group" aria-label="View">
+    <button data-v="both" class="on">Both</button><button data-v="overlay">Overlay</button>
+  </div>
+  <label class="ctl">Rate
+    <span class="seg" id="fpsSeg"><button data-v="5">5</button><button data-v="10" class="on">10</button><button data-v="15">15</button></span>
+  </label>
+  <label class="ctl">RGB
+    <span class="seg" id="sizeSeg"><button data-v="960" class="on">540p</button><button data-v="1280">720p</button></span>
+  </label>
+  <label class="ctl">Palette
+    <select id="palette"></select>
+  </label>
+  <label class="ctl">Range
+    <span class="seg" id="rangeSeg"><button data-v="auto" class="on">Auto</button><button data-v="fixed">Fixed</button></span>
+    <span id="fixedBox" class="fixed" hidden>
+      <input id="rMin" type="number" step="1" value="15" aria-label="Minimum degrees C"><span class="muted">to</span>
+      <input id="rMax" type="number" step="1" value="40" aria-label="Maximum degrees C"><span class="muted">&deg;C</span>
+    </span>
+  </label>
+  <label class="ctl" id="alphaBox" hidden>Overlay
+    <input id="alpha" type="range" min="0" max="100" value="50"><output id="alphaOut">50%</output>
+  </label>
+  <label class="ctl switch" id="boxBox" hidden><input id="boxes" type="checkbox"> Boxes</label>
+  <button id="snap" class="primary">Snapshot</button>
+</section>
+<div id="snapMsg" class="snapmsg muted" role="status" aria-live="polite"></div>
+
+<section class="search" id="search" aria-label="Search" hidden>
+  <form id="sForm" class="sform">
+    <input id="sText" type="text" autocomplete="off" placeholder="Who to find? e.g. person in a red jacket" aria-label="Who to find">
+    <button class="primary" type="submit">Search</button>
+    <button id="sClear" type="button" class="ghost">Clear</button>
+  </form>
+  <div class="sres">
+    <img id="sBest" alt="Best match" hidden>
+    <div class="sinfo">
+      <div id="sTitle" class="stitle">Type who to look for. People are boxed green; the best match turns red.</div>
+      <div id="sMeta" class="muted"></div>
+      <ol id="sList" class="slist"></ol>
+    </div>
+  </div>
+</section>
+
+<section class="orient" id="orient" aria-label="Camera orientation">
+  <div class="og">
+    <b>Main camera</b><span class="olbl" id="oCamLbl">--</span>
+    <button id="camRot" title="Rotate the main camera image 90 degrees clockwise">Rotate &#10227;</button>
+    <button id="camFlipH" title="Mirror left/right">Flip &#8596;</button>
+    <button id="camFlipV" title="Mirror top/bottom">Flip &#8597;</button>
+  </div>
+  <div class="og">
+    <b>Thermal</b><span class="olbl" id="oThLbl">--</span>
+    <button id="thRot" title="Rotate the thermal image 90 degrees clockwise">Rotate &#10227;</button>
+    <button id="thFlipH" title="Mirror left/right">Flip &#8596;</button>
+    <button id="thFlipV" title="Mirror top/bottom">Flip &#8597;</button>
+  </div>
+  <div class="og">
+    <button id="oSave" class="primary" title="Write CAMERA_ROTATE/FLIP and THERMAL_ROTATE/FLIP to .env">Save as default</button>
+    <span class="muted" id="oNote">Preview only until saved.</span>
+  </div>
+</section>
+
+<main class="grid" id="grid">
+  <section class="panel" id="pRgb">
+    <div class="phead">
+      <span class="dot" id="dRgb"></span><h2>RGB</h2>
+      <span class="meta" id="mRgb">&nbsp;</span>
+      <button class="fs" data-fs="pRgb" title="Fullscreen" aria-label="Fullscreen RGB"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 5V1h4M9 1h4v4M13 9v4H9M5 13H1V9"/></svg></button>
+    </div>
+    <div class="view rgb">
+      <img id="iRgb" alt="Live RGB camera" draggable="false">
+      <div class="msg" id="xRgb" hidden></div>
+    </div>
+  </section>
+
+  <section class="panel" id="pTh">
+    <div class="phead">
+      <span class="dot" id="dTh"></span><h2 id="thTitle">Thermal</h2>
+      <span class="meta" id="mTh">&nbsp;</span>
+      <button class="fs" data-fs="pTh" title="Fullscreen" aria-label="Fullscreen thermal"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 5V1h4M9 1h4v4M13 9v4H9M5 13H1V9"/></svg></button>
+    </div>
+    <div class="view th" id="thView">
+      <img id="iTh" alt="Live thermal camera" draggable="false">
+      <div class="mark hot" id="hotMark" hidden><i></i><b></b></div>
+      <div class="mark probe" id="probe" hidden><i></i><b></b></div>
+      <div class="msg" id="xTh" hidden></div>
+    </div>
+    <div class="scale" id="scale">
+      <span id="sMin">--</span>
+      <img id="sBar" alt="" src="/api/live/palette.png?name=inferno">
+      <span id="sMax">--</span>
+    </div>
+    <div class="hint muted" id="thHint">Tap the thermal image to read the temperature at that point.</div>
+    <div class="stats" id="thStats"></div>
+  </section>
+</main>
+<footer class="foot muted" id="foot"></footer>
+<script src="/live-assets/live.js"></script>
+</body>
+</html>

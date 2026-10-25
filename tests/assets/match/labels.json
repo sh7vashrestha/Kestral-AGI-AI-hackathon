@@ -1,0 +1,463 @@
+{
+ "note": "Labels by visual inspection. Attributes are of the upper body; 'a*' crops are aerial-like degraded copies of p* crops. For non-person crops is_human must be false and matches false for every target.",
+ "crops": [
+  {
+   "file": "persons/p01_red_jacket_ski.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "red",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "black pants"
+   }
+  },
+  {
+   "file": "persons/p02_white_cap_runner.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": true,
+    "lower": "grey pants"
+   }
+  },
+  {
+   "file": "persons/p03_white_polo_cap.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": true,
+    "lower": "white shorts"
+   }
+  },
+  {
+   "file": "persons/p04_white_tee_cap.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": true,
+    "lower": "black shorts"
+   }
+  },
+  {
+   "file": "persons/p05_orange_cap_kid.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": true,
+    "lower": "white shorts"
+   }
+  },
+  {
+   "file": "persons/p06_white_top_woman.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": false,
+    "lower": "n/a"
+   }
+  },
+  {
+   "file": "persons/p07_colour_jacket_skier.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "multicolour",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "beige pants"
+   }
+  },
+  {
+   "file": "persons/p08_green_top_cap_skier.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "green",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "black pants"
+   }
+  },
+  {
+   "file": "persons/p09_black_tee_crouch.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "black",
+    "sleeves": "short",
+    "hat": false,
+    "lower": "dark pants"
+   }
+  },
+  {
+   "file": "persons/p10_white_shirt_tie.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "dark grey",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "dark suit"
+   }
+  },
+  {
+   "file": "persons/p11_yellow_top_surfer.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "cream",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "n/a"
+   }
+  },
+  {
+   "file": "persons/p12_beige_coat_helmet_child.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "beige",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "n/a"
+   }
+  },
+  {
+   "file": "persons/p13_green_polo_sitting.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "green",
+    "sleeves": "short",
+    "hat": false,
+    "lower": "dark shorts"
+   }
+  },
+  {
+   "file": "persons/p14_striped_brown_boy.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "brown",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "n/a"
+   }
+  },
+  {
+   "file": "persons/p15_black_beanie.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "black",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "n/a"
+   }
+  },
+  {
+   "file": "persons/p16_cream_fleece.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "cream",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "blue jeans"
+   }
+  },
+  {
+   "file": "persons/p17_navy_coat_glasses.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "navy",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "blue jeans"
+   }
+  },
+  {
+   "file": "persons/p18_black_suit.jpg",
+   "is_person": true,
+   "aerial_like": false,
+   "attributes": {
+    "upper_colour": "black",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "dark trousers"
+   }
+  },
+  {
+   "file": "persons/a01_red_jacket_ski.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "red",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "black pants"
+   }
+  },
+  {
+   "file": "persons/a02_white_cap_runner.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "white",
+    "sleeves": "short",
+    "hat": true,
+    "lower": "grey pants"
+   }
+  },
+  {
+   "file": "persons/a03_green_top_cap_skier.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "green",
+    "sleeves": "long",
+    "hat": true,
+    "lower": "black pants"
+   }
+  },
+  {
+   "file": "persons/a04_green_polo_sitting.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "green",
+    "sleeves": "short",
+    "hat": false,
+    "lower": "dark shorts"
+   }
+  },
+  {
+   "file": "persons/a05_cream_fleece.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "cream",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "blue jeans"
+   }
+  },
+  {
+   "file": "persons/a06_black_suit.jpg",
+   "is_person": true,
+   "aerial_like": true,
+   "attributes": {
+    "upper_colour": "black",
+    "sleeves": "long",
+    "hat": false,
+    "lower": "dark trousers"
+   }
+  },
+  {
+   "file": "nonperson/n01_bus_body.jpg",
+   "is_person": false,
+   "aerial_like": false,
+   "attributes": {}
+  },
+  {
+   "file": "nonperson/n02_pavement.jpg",
+   "is_person": false,
+   "aerial_like": false,
+   "attributes": {}
+  },
+  {
+   "file": "nonperson/n03_zidane_crowd_bg.jpg",
+   "is_person": false,
+   "aerial_like": false,
+   "attributes": {}
+  }
+ ],
+ "targets": [
+  {
+   "target": "person wearing a red jacket",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": true,
+    "persons/p02_white_cap_runner.jpg": false,
+    "persons/p03_white_polo_cap.jpg": false,
+    "persons/p04_white_tee_cap.jpg": false,
+    "persons/p05_orange_cap_kid.jpg": false,
+    "persons/p06_white_top_woman.jpg": false,
+    "persons/p07_colour_jacket_skier.jpg": false,
+    "persons/p08_green_top_cap_skier.jpg": false,
+    "persons/p09_black_tee_crouch.jpg": false,
+    "persons/p10_white_shirt_tie.jpg": false,
+    "persons/p11_yellow_top_surfer.jpg": false,
+    "persons/p12_beige_coat_helmet_child.jpg": false,
+    "persons/p13_green_polo_sitting.jpg": false,
+    "persons/p14_striped_brown_boy.jpg": false,
+    "persons/p15_black_beanie.jpg": false,
+    "persons/p16_cream_fleece.jpg": false,
+    "persons/p17_navy_coat_glasses.jpg": false,
+    "persons/p18_black_suit.jpg": false,
+    "persons/a01_red_jacket_ski.jpg": true,
+    "persons/a02_white_cap_runner.jpg": false,
+    "persons/a03_green_top_cap_skier.jpg": false,
+    "persons/a04_green_polo_sitting.jpg": false,
+    "persons/a05_cream_fleece.jpg": false,
+    "persons/a06_black_suit.jpg": false
+   }
+  },
+  {
+   "target": "person wearing a long-sleeve shirt",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": true,
+    "persons/p02_white_cap_runner.jpg": false,
+    "persons/p03_white_polo_cap.jpg": false,
+    "persons/p04_white_tee_cap.jpg": false,
+    "persons/p05_orange_cap_kid.jpg": false,
+    "persons/p06_white_top_woman.jpg": false,
+    "persons/p07_colour_jacket_skier.jpg": true,
+    "persons/p08_green_top_cap_skier.jpg": true,
+    "persons/p09_black_tee_crouch.jpg": false,
+    "persons/p10_white_shirt_tie.jpg": true,
+    "persons/p11_yellow_top_surfer.jpg": true,
+    "persons/p12_beige_coat_helmet_child.jpg": true,
+    "persons/p13_green_polo_sitting.jpg": false,
+    "persons/p14_striped_brown_boy.jpg": true,
+    "persons/p15_black_beanie.jpg": true,
+    "persons/p16_cream_fleece.jpg": true,
+    "persons/p17_navy_coat_glasses.jpg": true,
+    "persons/p18_black_suit.jpg": true,
+    "persons/a01_red_jacket_ski.jpg": true,
+    "persons/a02_white_cap_runner.jpg": false,
+    "persons/a03_green_top_cap_skier.jpg": true,
+    "persons/a04_green_polo_sitting.jpg": false,
+    "persons/a05_cream_fleece.jpg": true,
+    "persons/a06_black_suit.jpg": true
+   }
+  },
+  {
+   "target": "person wearing a hat or cap",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": true,
+    "persons/p02_white_cap_runner.jpg": true,
+    "persons/p03_white_polo_cap.jpg": true,
+    "persons/p04_white_tee_cap.jpg": true,
+    "persons/p05_orange_cap_kid.jpg": true,
+    "persons/p06_white_top_woman.jpg": false,
+    "persons/p07_colour_jacket_skier.jpg": true,
+    "persons/p08_green_top_cap_skier.jpg": true,
+    "persons/p09_black_tee_crouch.jpg": false,
+    "persons/p10_white_shirt_tie.jpg": false,
+    "persons/p11_yellow_top_surfer.jpg": false,
+    "persons/p12_beige_coat_helmet_child.jpg": true,
+    "persons/p13_green_polo_sitting.jpg": false,
+    "persons/p14_striped_brown_boy.jpg": false,
+    "persons/p15_black_beanie.jpg": true,
+    "persons/p16_cream_fleece.jpg": false,
+    "persons/p17_navy_coat_glasses.jpg": false,
+    "persons/p18_black_suit.jpg": false,
+    "persons/a01_red_jacket_ski.jpg": true,
+    "persons/a02_white_cap_runner.jpg": true,
+    "persons/a03_green_top_cap_skier.jpg": true,
+    "persons/a04_green_polo_sitting.jpg": false,
+    "persons/a05_cream_fleece.jpg": false,
+    "persons/a06_black_suit.jpg": false
+   }
+  },
+  {
+   "target": "person in a green top",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": false,
+    "persons/p02_white_cap_runner.jpg": false,
+    "persons/p03_white_polo_cap.jpg": false,
+    "persons/p04_white_tee_cap.jpg": false,
+    "persons/p05_orange_cap_kid.jpg": false,
+    "persons/p06_white_top_woman.jpg": false,
+    "persons/p07_colour_jacket_skier.jpg": false,
+    "persons/p08_green_top_cap_skier.jpg": true,
+    "persons/p09_black_tee_crouch.jpg": false,
+    "persons/p10_white_shirt_tie.jpg": false,
+    "persons/p11_yellow_top_surfer.jpg": false,
+    "persons/p12_beige_coat_helmet_child.jpg": false,
+    "persons/p13_green_polo_sitting.jpg": true,
+    "persons/p14_striped_brown_boy.jpg": false,
+    "persons/p15_black_beanie.jpg": false,
+    "persons/p16_cream_fleece.jpg": false,
+    "persons/p17_navy_coat_glasses.jpg": false,
+    "persons/p18_black_suit.jpg": false,
+    "persons/a01_red_jacket_ski.jpg": false,
+    "persons/a02_white_cap_runner.jpg": false,
+    "persons/a03_green_top_cap_skier.jpg": true,
+    "persons/a04_green_polo_sitting.jpg": true,
+    "persons/a05_cream_fleece.jpg": false,
+    "persons/a06_black_suit.jpg": false
+   }
+  },
+  {
+   "target": "person wearing a white short-sleeve shirt and a cap",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": false,
+    "persons/p02_white_cap_runner.jpg": true,
+    "persons/p03_white_polo_cap.jpg": true,
+    "persons/p04_white_tee_cap.jpg": true,
+    "persons/p05_orange_cap_kid.jpg": true,
+    "persons/p06_white_top_woman.jpg": false,
+    "persons/p07_colour_jacket_skier.jpg": false,
+    "persons/p08_green_top_cap_skier.jpg": false,
+    "persons/p09_black_tee_crouch.jpg": false,
+    "persons/p10_white_shirt_tie.jpg": false,
+    "persons/p11_yellow_top_surfer.jpg": false,
+    "persons/p12_beige_coat_helmet_child.jpg": false,
+    "persons/p13_green_polo_sitting.jpg": false,
+    "persons/p14_striped_brown_boy.jpg": false,
+    "persons/p15_black_beanie.jpg": false,
+    "persons/p16_cream_fleece.jpg": false,
+    "persons/p17_navy_coat_glasses.jpg": false,
+    "persons/p18_black_suit.jpg": false,
+    "persons/a01_red_jacket_ski.jpg": false,
+    "persons/a02_white_cap_runner.jpg": true,
+    "persons/a03_green_top_cap_skier.jpg": false,
+    "persons/a04_green_polo_sitting.jpg": false,
+    "persons/a05_cream_fleece.jpg": false,
+    "persons/a06_black_suit.jpg": false
+   }
+  },
+  {
+   "target": "any person",
+   "expected": {
+    "persons/p01_red_jacket_ski.jpg": true,
+    "persons/p02_white_cap_runner.jpg": true,
+    "persons/p03_white_polo_cap.jpg": true,
+    "persons/p04_white_tee_cap.jpg": true,
+    "persons/p05_orange_cap_kid.jpg": true,
+    "persons/p06_white_top_woman.jpg": true,
+    "persons/p07_colour_jacket_skier.jpg": true,
+    "persons/p08_green_top_cap_skier.jpg": true,
+    "persons/p09_black_tee_crouch.jpg": true,
+    "persons/p10_white_shirt_tie.jpg": true,
+    "persons/p11_yellow_top_surfer.jpg": true,
+    "persons/p12_beige_coat_helmet_child.jpg": true,
+    "persons/p13_green_polo_sitting.jpg": true,
+    "persons/p14_striped_brown_boy.jpg": true,
+    "persons/p15_black_beanie.jpg": true,
+    "persons/p16_cream_fleece.jpg": true,
+    "persons/p17_navy_coat_glasses.jpg": true,
+    "persons/p18_black_suit.jpg": true,
+    "persons/a01_red_jacket_ski.jpg": true,
+    "persons/a02_white_cap_runner.jpg": true,
+    "persons/a03_green_top_cap_skier.jpg": true,
+    "persons/a04_green_polo_sitting.jpg": true,
+    "persons/a05_cream_fleece.jpg": true,
+    "persons/a06_black_suit.jpg": true
+   }
+  }
+ ]
+}

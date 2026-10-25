@@ -1,0 +1,16 @@
+[Unit]
+Description=drone-brain orchestrator (web UI, planner, vision, MAVLink)
+After=drone-llama.service drone-hotspot.service
+Wants=drone-llama.service
+
+[Service]
+Type=simple
+User=drone
+WorkingDirectory=/home/drone/Desktop/Flight Plan/drone-brain
+ExecStart="/home/drone/Desktop/Flight Plan/drone-brain/.venv/bin/python" main.py
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

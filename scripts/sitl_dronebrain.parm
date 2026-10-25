@@ -1,0 +1,15 @@
+# drone-brain SITL defaults (loaded after Tools/autotest/default_params/copter.parm).
+# Makes SITL pass mission.preflight_check() with the stock .env limits (MAX_ALT_M=60, GEOFENCE_RADIUS_M=300,
+# OBSTACLE_CLEARANCE_M=15). The REAL Pixhawk is configured by a human in Mission Planner, never by code.
+FENCE_ENABLE 1
+FENCE_TYPE 7
+FENCE_ALT_MAX 60
+FENCE_RADIUS 300
+FENCE_ACTION 1
+BATT_FS_LOW_ACT 2
+FS_THR_ENABLE 1
+# ArduCopter <= 4.7: RTL_ALT (cm) / WPNAV_SPEED (cm/s); 4.8+: RTL_ALT_M (m) / WP_SPD (m/s). Unknown names are ignored.
+RTL_ALT 2000
+RTL_ALT_M 20
+WPNAV_SPEED 500
+WP_SPD 5

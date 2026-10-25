@@ -1,0 +1,15 @@
+[Unit]
+Description=drone-brain llama-server (Gemma VLM)
+After=drone-hotspot.service network.target
+Wants=drone-hotspot.service
+
+[Service]
+Type=simple
+User=drone
+WorkingDirectory=/home/drone/Desktop/Flight Plan/gemma4-vlm
+ExecStart=/bin/bash "/home/drone/Desktop/Flight Plan/gemma4-vlm/run_server.sh"
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
